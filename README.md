@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UPB Test — Frontend propio (Next.js + Firebase Hosting)
 
-## Getting Started
+Frontend creado desde cero para la certificación de **Desarrollo de IA (Trimestre 2, Valcarce)**.
 
-First, run the development server:
+Consume la API REST del backend `backendUpbtest_valcarce` (Express + PostgreSQL) para
+gestionar un catálogo de productos.
+
+## Stack
+
+- **Next.js 16** (App Router, TypeScript, Turbopack)
+- **Tailwind CSS v4**
+- **Export estático** (`output: "export"`) para desplegar en **Firebase Hosting**
+
+## Endpoints consumidos
+
+| Método | Ruta                    | Acción                    |
+| ------ | ----------------------- | ------------------------- |
+| GET    | `/`                     | Health check del backend  |
+| GET    | `/api/productos`        | Listar productos          |
+| GET    | `/api/productos/:id`    | Obtener un producto       |
+| POST   | `/api/productos`        | Crear `{nombre, precio, stock}` |
+| PUT    | `/api/productos/:id`    | Actualizar (parcial)      |
+| DELETE | `/api/productos/:id`    | Eliminar                  |
+
+## Configuración
+
+1. Instala dependencias:
+
+   ```bash
+   npm install
+   ```
+
+2. Define la URL del backend en `.env.local` (desarrollo):
+
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:3000
+   ```
+
+   En producción se usa `.env.production`:
+
+   ```env
+   NEXT_PUBLIC_API_URL=https://backendupbtest-e79a.onrender.com
+   ```
+
+   Referencia: `.env.example`.
+
+## Desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre <http://localhost:3001> (el backend ocupa el puerto 3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build y despliegue en Firebase Hosting
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build          # genera la carpeta `out/`
+firebase deploy --only hosting
+```
 
-## Learn More
+La configuración de hosting vive en `firebase.json` (directorio público `out`,
+rewrite de SPA a `/index.html`).
 
-To learn more about Next.js, take a look at the following resources:
+## Estructura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/
+  layout.tsx            Layout raíz (fuentes, metadata)
+  page.tsx              Landing con hero, pasos y resumen en vivo
+  productos/page.tsx    Página del CRUD de productos
+  globals.css           Sistema de diseño (tema, botones, tarjetas)
+components/
+  SiteHeader.tsx        Cabecera compartida
+  SiteFooter.tsx        Pie compartido
+  ProductosApp.tsx      CRUD completo (listar/crear/editar/eliminar)
+  EstadoConexion.tsx    Panel flotante de estado frontend/backend/DB
+  ResumenCatalogo.tsx   Contador en vivo del catálogo
+lib/
+  api.ts                Cliente HTTP tipado del backend
+```

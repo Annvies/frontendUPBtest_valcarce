@@ -1,69 +1,151 @@
-import Image from "next/image";
+import Link from "next/link";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import EstadoConexion from "@/components/EstadoConexion";
+import ResumenCatalogo from "@/components/ResumenCatalogo";
+
+const pasos = [
+  {
+    numero: "01",
+    titulo: "Crear",
+    descripcion:
+      "Registra un producto con nombre, precio y stock desde un formulario con validación en tiempo real.",
+    icono: "＋",
+  },
+  {
+    numero: "02",
+    titulo: "Editar",
+    descripcion:
+      "Actualiza cualquier producto del catálogo con actualización parcial: cambia solo lo que necesites.",
+    icono: "✎",
+  },
+  {
+    numero: "03",
+    titulo: "Eliminar",
+    descripcion:
+      "Borra productos con confirmación previa y recibe el mensaje exacto del backend si algo falla.",
+    icono: "✕",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <SiteHeader />
+
+      <main className="flex-1">
+        {/* Hero */}
+        <section className="relative overflow-hidden">
+          <span aria-hidden="true" className="hero-glow hero-glow--one" />
+          <span aria-hidden="true" className="hero-glow hero-glow--two" />
+
+          <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
+            <div>
+              <p className="eyebrow">Frontend + Backend conectados</p>
+              <h1 className="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">
+                Tu catálogo de productos,{" "}
+                <span style={{ color: "var(--brand)" }}>listo para funcionar.</span>
+              </h1>
+              <p className="mt-5 max-w-lg text-base leading-relaxed" style={{ color: "var(--muted)" }}>
+                Esta aplicación fue creada desde cero con Next.js y desplegada en
+                Firebase Hosting. Consume la API REST del backend Express + PostgreSQL
+                para gestionar productos en tiempo real.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Link href="/productos" className="btn btn--primary">
+                  Abrir catálogo <span aria-hidden="true">→</span>
+                </Link>
+                <ResumenCatalogo />
+              </div>
+            </div>
+
+            <div className="card floaty relative mx-auto w-full max-w-sm p-6" role="img" aria-label="Vista ilustrativa del catálogo de productos">
+              <div className="flex items-center justify-between">
+                <span className="pill pill--ok">● API conectada</span>
+                <span className="text-xs font-bold" style={{ color: "var(--muted)" }}>
+                  /api/productos
+                </span>
+              </div>
+
+              <ul className="mt-5 space-y-3">
+                {[
+                  { nombre: "Laptop Pro 14", precio: "$ 999.00", stock: 12 },
+                  { nombre: "Mouse inalámbrico", precio: "$ 24.90", stock: 58 },
+                  { nombre: "Teclado mecánico", precio: "$ 89.00", stock: 3 },
+                ].map((p) => (
+                  <li
+                    key={p.nombre}
+                    className="flex items-center justify-between rounded-xl border border-[var(--border)] px-4 py-3"
+                  >
+                    <div>
+                      <div className="text-sm font-bold">{p.nombre}</div>
+                      <div className="text-xs" style={{ color: "var(--muted)" }}>
+                        {p.precio}
+                      </div>
+                    </div>
+                    <span
+                      className={`pill ${p.stock > 10 ? "pill--ok" : p.stock > 5 ? "pill--warn" : "pill--low"}`}
+                    >
+                      {p.stock} uds.
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 text-center text-xs font-semibold" style={{ color: "var(--muted)" }}>
+                GET · POST · PUT · DELETE — todo desde el navegador
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Pasos */}
+        <section className="mx-auto w-full max-w-6xl px-5 py-16">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="eyebrow justify-center">Cómo funciona</p>
+            <h2 className="mt-3 text-3xl font-extrabold">
+              Un CRUD completo en tres pasos
+            </h2>
+            <p className="mt-3" style={{ color: "var(--muted)" }}>
+              Cada acción del frontend se traduce en una petición HTTP real hacia el
+              backend de la certificación.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {pasos.map((paso) => (
+              <article key={paso.numero} className="card p-6">
+                <div className="flex items-center justify-between">
+                  <span
+                    className="flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold"
+                    style={{ background: "var(--brand-soft)", color: "var(--brand)" }}
+                    aria-hidden="true"
+                  >
+                    {paso.icono}
+                  </span>
+                  <span className="text-sm font-extrabold" style={{ color: "var(--border)" }}>
+                    {paso.numero}
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-bold">{paso.titulo}</h3>
+                <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+                  {paso.descripcion}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link href="/productos" className="btn btn--soft">
+              Probar el catálogo ahora <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+        </section>
       </main>
-    </div>
+
+      <SiteFooter />
+      <EstadoConexion />
+    </>
   );
 }
