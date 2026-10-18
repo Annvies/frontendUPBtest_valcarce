@@ -39,7 +39,7 @@ gestionar un catálogo de productos.
    En producción se usa `.env.production`:
 
    ```env
-   NEXT_PUBLIC_API_URL=https://backendupbtest-e79a.onrender.com
+   NEXT_PUBLIC_API_URL=https://backendupbtest-valcarce.onrender.com
    ```
 
    Referencia: `.env.example`.

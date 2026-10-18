@@ -28,7 +28,7 @@ jobs:
       - name: Build (static export)
         run: npm run build
         env:
-          NEXT_PUBLIC_API_URL: https://backendupbtest-e79a.onrender.com
+          NEXT_PUBLIC_API_URL: https://backendupbtest-valcarce.onrender.com
 
       - name: Upload build artifact (out)
         uses: actions/upload-artifact@v4

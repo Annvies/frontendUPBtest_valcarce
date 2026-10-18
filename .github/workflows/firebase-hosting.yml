@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_API_URL: https://backendupbtest-e79a.onrender.com
+          NEXT_PUBLIC_API_URL: https://backendupbtest-valcarce.onrender.com
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
